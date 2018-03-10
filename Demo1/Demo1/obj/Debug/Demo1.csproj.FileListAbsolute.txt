@@ -1,0 +1,17 @@
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\bin\Debug\Demo1.exe.config
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\bin\Debug\Demo1.exe
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\bin\Debug\Demo1.pdb
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\bin\Debug\Bunifu_UI_v1.5.3.dll
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.CustomCourceGoals.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.CustomLoginAccount.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.Main.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.Properties.Resources.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.csproj.GenerateResource.Cache
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.exe
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.pdb
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.customCourseLearning.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\bin\Debug\SQLite.NET.dll
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.customRegisterAccount.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.customLessonPlant.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.customMatrix.resources
+C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.csprojResolveAssemblyReference.cache
