@@ -16,6 +16,7 @@ namespace Demo1
         public CustomLoginAccount()
         {
             InitializeComponent();
+            
         }
 
         String user = "";
@@ -24,6 +25,10 @@ namespace Demo1
         public event EventHandler actionRequestLogin;
         private void CustomLoginAccount_Load(object sender, EventArgs e)
         {
+            txtUser.ForeColor = Color.LightGray;
+            txtUser.Text = "Username or Email";
+            txtPassword.Text = "Password";
+            txtPassword.ForeColor = Color.LightGray;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -36,6 +41,9 @@ namespace Demo1
         }
 
         public event EventHandler action_btnCancel_Clicked;
+        public event EventHandler action_btnSignup_Clicked;
+        public event EventHandler action_setUserName;
+
         public void btnCancel_Click(object sender, EventArgs e)
         {
             if (action_btnCancel_Clicked != null)
@@ -50,11 +58,13 @@ namespace Demo1
         private void txtUser_Enter(object sender, EventArgs e)
         {
             txtUser.Text = "";
+            txtUser.ForeColor = Color.Black;
         }
 
         private void txtPassword_Enter(object sender, EventArgs e)
         {
             txtPassword.Text = "";
+            txtPassword.ForeColor = Color.Black;
         }
 
         private void btnSignin_Click(object sender, EventArgs e)
@@ -63,7 +73,7 @@ namespace Demo1
             pass = txtPassword.Text;
             if (user.Equals("Username or Email") || pass.Equals("Password") || user.Equals("") || pass.Equals(""))
             {
-                MessageBox.Show("please input full information account go login!");
+                MessageBox.Show("please input full information account to login!");
             }
             else
             {
@@ -81,6 +91,13 @@ namespace Demo1
                     if (pass.Equals(Main.pass[index]))
                     {
                         MessageBox.Show("Login Successful!");
+                        Main.currentUser = Main.user[index]; 
+                        //set name btnLogin to btnLogout
+                        
+                        if(action_setUserName!=null)
+                        {
+                            action_setUserName(this,null);
+                        }
                         Main.flag_admin = true;
                         if (Main.past_screen == Main._screen_UI.matrix)
                         { 
@@ -94,6 +111,12 @@ namespace Demo1
                     }
                 }
             }
+        }
+
+        private void btnSignup_Click(object sender, EventArgs e)
+        {
+            if (action_btnSignup_Clicked != null)
+                action_btnSignup_Clicked(this, null);
         }
     }
 }

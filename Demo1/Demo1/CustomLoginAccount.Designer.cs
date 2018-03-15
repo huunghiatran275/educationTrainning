@@ -154,6 +154,7 @@
             this.btnSignup.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnSignup.Textcolor = System.Drawing.Color.Black;
             this.btnSignup.TextFont = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSignup.Click += new System.EventHandler(this.btnSignup_Click);
             // 
             // btnSignin
             // 
@@ -222,7 +223,7 @@
             this.txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtPassword.Font = new System.Drawing.Font("Century Gothic", 9.75F);
             this.txtPassword.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.txtPassword.isPassword = false;
+            this.txtPassword.isPassword = true;
             this.txtPassword.Location = new System.Drawing.Point(62, 163);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Name = "txtPassword";
@@ -316,14 +317,14 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private Bunifu.Framework.UI.BunifuElipse bunifuElipse1;
         private System.Windows.Forms.Label label1;
-        private Bunifu.Framework.UI.BunifuMetroTextbox txtUser;
         private Bunifu.Framework.UI.BunifuThinButton2 btnSignin;
         private System.Windows.Forms.Label label2;
         private Bunifu.Framework.UI.BunifuCheckbox checkbox;
-        private Bunifu.Framework.UI.BunifuMetroTextbox txtPassword;
         private Bunifu.Framework.UI.BunifuFlatButton btnRecoverPass;
         private Bunifu.Framework.UI.BunifuFlatButton btnSignup;
         private Bunifu.Framework.UI.BunifuImageButton btnCancel;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        public Bunifu.Framework.UI.BunifuMetroTextbox txtUser;
+        public Bunifu.Framework.UI.BunifuMetroTextbox txtPassword;
     }
 }

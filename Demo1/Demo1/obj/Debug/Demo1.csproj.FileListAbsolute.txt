@@ -15,3 +15,20 @@ C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.customRegisterAccou
 C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.customLessonPlant.resources
 C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.customMatrix.resources
 C:\Users\user\Desktop\Luận án\Demo1\Demo1\obj\Debug\Demo1.csprojResolveAssemblyReference.cache
+E:\GitHub\educationTrainning\Demo1\Demo1\bin\Debug\Demo1.exe.config
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.exe
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.pdb
+E:\GitHub\educationTrainning\Demo1\Demo1\bin\Debug\Demo1.exe
+E:\GitHub\educationTrainning\Demo1\Demo1\bin\Debug\Demo1.pdb
+E:\GitHub\educationTrainning\Demo1\Demo1\bin\Debug\Bunifu_UI_v1.5.3.dll
+E:\GitHub\educationTrainning\Demo1\Demo1\bin\Debug\SQLite.NET.dll
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.csprojResolveAssemblyReference.cache
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.CustomCourceGoals.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.customCourseLearning.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.customLessonPlant.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.CustomLoginAccount.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.customMatrix.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.customRegisterAccount.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.Main.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.Properties.Resources.resources
+E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.csproj.GenerateResource.Cache

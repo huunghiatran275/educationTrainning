@@ -31,19 +31,19 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(customRegisterAccount));
             this.loginPanel = new System.Windows.Forms.Panel();
+            this.btnCancel = new Bunifu.Framework.UI.BunifuImageButton();
             this.btnRecoverPass = new Bunifu.Framework.UI.BunifuFlatButton();
-            this.btnLogin = new Bunifu.Framework.UI.BunifuFlatButton();
+            this.btnGoLogin = new Bunifu.Framework.UI.BunifuFlatButton();
+            this.btnRegister = new Bunifu.Framework.UI.BunifuThinButton2();
             this.label2 = new System.Windows.Forms.Label();
             this.checkbox = new Bunifu.Framework.UI.BunifuCheckbox();
+            this.txtConfirmPass = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.txtPassword = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.txtUser = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.label1 = new System.Windows.Forms.Label();
             this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnCancel = new Bunifu.Framework.UI.BunifuImageButton();
-            this.btnRegister = new Bunifu.Framework.UI.BunifuThinButton2();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.txtConfirmPass = new Bunifu.Framework.UI.BunifuMetroTextbox();
             this.loginPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnCancel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -55,7 +55,7 @@
             this.loginPanel.BackColor = System.Drawing.Color.White;
             this.loginPanel.Controls.Add(this.btnCancel);
             this.loginPanel.Controls.Add(this.btnRecoverPass);
-            this.loginPanel.Controls.Add(this.btnLogin);
+            this.loginPanel.Controls.Add(this.btnGoLogin);
             this.loginPanel.Controls.Add(this.btnRegister);
             this.loginPanel.Controls.Add(this.label2);
             this.loginPanel.Controls.Add(this.checkbox);
@@ -68,6 +68,22 @@
             this.loginPanel.Size = new System.Drawing.Size(525, 429);
             this.loginPanel.TabIndex = 2;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.BackColor = System.Drawing.Color.White;
+            this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
+            this.btnCancel.ImageActive = null;
+            this.btnCancel.Location = new System.Drawing.Point(494, 3);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(28, 43);
+            this.btnCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabStop = false;
+            this.btnCancel.Zoom = 10;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // btnRecoverPass
             // 
             this.btnRecoverPass.Activecolor = System.Drawing.Color.Coral;
@@ -76,7 +92,7 @@
             this.btnRecoverPass.BackColor = System.Drawing.Color.White;
             this.btnRecoverPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnRecoverPass.BorderRadius = 0;
-            this.btnRecoverPass.ButtonText = "Recover my password";
+            this.btnRecoverPass.ButtonText = "Nothing";
             this.btnRecoverPass.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnRecoverPass.DisabledColor = System.Drawing.Color.Gray;
             this.btnRecoverPass.Iconcolor = System.Drawing.Color.Transparent;
@@ -99,46 +115,75 @@
             this.btnRecoverPass.selected = false;
             this.btnRecoverPass.Size = new System.Drawing.Size(163, 33);
             this.btnRecoverPass.TabIndex = 6;
-            this.btnRecoverPass.Text = "Recover my password";
+            this.btnRecoverPass.Text = "Nothing";
             this.btnRecoverPass.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnRecoverPass.Textcolor = System.Drawing.Color.Black;
             this.btnRecoverPass.TextFont = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             // 
-            // btnLogin
+            // btnGoLogin
             // 
-            this.btnLogin.Activecolor = System.Drawing.Color.Coral;
-            this.btnLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btnGoLogin.Activecolor = System.Drawing.Color.Coral;
+            this.btnGoLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnLogin.BackColor = System.Drawing.Color.White;
-            this.btnLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnLogin.BorderRadius = 0;
-            this.btnLogin.ButtonText = "Already registered and Sign in";
-            this.btnLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogin.DisabledColor = System.Drawing.Color.Gray;
-            this.btnLogin.Iconcolor = System.Drawing.Color.Transparent;
-            this.btnLogin.Iconimage = null;
-            this.btnLogin.Iconimage_right = null;
-            this.btnLogin.Iconimage_right_Selected = null;
-            this.btnLogin.Iconimage_Selected = null;
-            this.btnLogin.IconMarginLeft = 0;
-            this.btnLogin.IconMarginRight = 0;
-            this.btnLogin.IconRightVisible = true;
-            this.btnLogin.IconRightZoom = 0D;
-            this.btnLogin.IconVisible = true;
-            this.btnLogin.IconZoom = 90D;
-            this.btnLogin.IsTab = false;
-            this.btnLogin.Location = new System.Drawing.Point(62, 381);
-            this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Normalcolor = System.Drawing.Color.White;
-            this.btnLogin.OnHovercolor = System.Drawing.Color.White;
-            this.btnLogin.OnHoverTextColor = System.Drawing.Color.CornflowerBlue;
-            this.btnLogin.selected = false;
-            this.btnLogin.Size = new System.Drawing.Size(209, 33);
-            this.btnLogin.TabIndex = 6;
-            this.btnLogin.Text = "Already registered and Sign in";
-            this.btnLogin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnLogin.Textcolor = System.Drawing.Color.Black;
-            this.btnLogin.TextFont = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoLogin.BackColor = System.Drawing.Color.White;
+            this.btnGoLogin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnGoLogin.BorderRadius = 0;
+            this.btnGoLogin.ButtonText = "Already registered and Sign in";
+            this.btnGoLogin.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGoLogin.DisabledColor = System.Drawing.Color.Gray;
+            this.btnGoLogin.Iconcolor = System.Drawing.Color.Transparent;
+            this.btnGoLogin.Iconimage = null;
+            this.btnGoLogin.Iconimage_right = null;
+            this.btnGoLogin.Iconimage_right_Selected = null;
+            this.btnGoLogin.Iconimage_Selected = null;
+            this.btnGoLogin.IconMarginLeft = 0;
+            this.btnGoLogin.IconMarginRight = 0;
+            this.btnGoLogin.IconRightVisible = true;
+            this.btnGoLogin.IconRightZoom = 0D;
+            this.btnGoLogin.IconVisible = true;
+            this.btnGoLogin.IconZoom = 90D;
+            this.btnGoLogin.IsTab = false;
+            this.btnGoLogin.Location = new System.Drawing.Point(62, 381);
+            this.btnGoLogin.Name = "btnGoLogin";
+            this.btnGoLogin.Normalcolor = System.Drawing.Color.White;
+            this.btnGoLogin.OnHovercolor = System.Drawing.Color.White;
+            this.btnGoLogin.OnHoverTextColor = System.Drawing.Color.CornflowerBlue;
+            this.btnGoLogin.selected = false;
+            this.btnGoLogin.Size = new System.Drawing.Size(209, 33);
+            this.btnGoLogin.TabIndex = 6;
+            this.btnGoLogin.Text = "Already registered and Sign in";
+            this.btnGoLogin.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnGoLogin.Textcolor = System.Drawing.Color.Black;
+            this.btnGoLogin.TextFont = new System.Drawing.Font("Century", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGoLogin.Click += new System.EventHandler(this.btnGoLogin_Click);
+            // 
+            // btnRegister
+            // 
+            this.btnRegister.ActiveBorderThickness = 1;
+            this.btnRegister.ActiveCornerRadius = 20;
+            this.btnRegister.ActiveFillColor = System.Drawing.Color.Coral;
+            this.btnRegister.ActiveForecolor = System.Drawing.Color.White;
+            this.btnRegister.ActiveLineColor = System.Drawing.Color.Coral;
+            this.btnRegister.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRegister.BackColor = System.Drawing.Color.White;
+            this.btnRegister.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRegister.BackgroundImage")));
+            this.btnRegister.ButtonText = "Register";
+            this.btnRegister.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRegister.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRegister.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnRegister.IdleBorderThickness = 1;
+            this.btnRegister.IdleCornerRadius = 20;
+            this.btnRegister.IdleFillColor = System.Drawing.Color.CornflowerBlue;
+            this.btnRegister.IdleForecolor = System.Drawing.Color.White;
+            this.btnRegister.IdleLineColor = System.Drawing.Color.CornflowerBlue;
+            this.btnRegister.Location = new System.Drawing.Point(62, 321);
+            this.btnRegister.Margin = new System.Windows.Forms.Padding(6);
+            this.btnRegister.Name = "btnRegister";
+            this.btnRegister.Size = new System.Drawing.Size(409, 63);
+            this.btnRegister.TabIndex = 5;
+            this.btnRegister.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnRegister.Click += new System.EventHandler(this.btnRegister_Click);
             // 
             // label2
             // 
@@ -167,6 +212,26 @@
             this.checkbox.Name = "checkbox";
             this.checkbox.Size = new System.Drawing.Size(20, 20);
             this.checkbox.TabIndex = 2;
+            // 
+            // txtConfirmPass
+            // 
+            this.txtConfirmPass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtConfirmPass.BorderColorFocused = System.Drawing.Color.Blue;
+            this.txtConfirmPass.BorderColorIdle = System.Drawing.Color.CornflowerBlue;
+            this.txtConfirmPass.BorderColorMouseHover = System.Drawing.Color.Blue;
+            this.txtConfirmPass.BorderThickness = 3;
+            this.txtConfirmPass.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtConfirmPass.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+            this.txtConfirmPass.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.txtConfirmPass.isPassword = false;
+            this.txtConfirmPass.Location = new System.Drawing.Point(62, 222);
+            this.txtConfirmPass.Margin = new System.Windows.Forms.Padding(4);
+            this.txtConfirmPass.Name = "txtConfirmPass";
+            this.txtConfirmPass.Size = new System.Drawing.Size(409, 51);
+            this.txtConfirmPass.TabIndex = 1;
+            this.txtConfirmPass.Text = "Confirm Password";
+            this.txtConfirmPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // txtPassword
             // 
@@ -232,48 +297,6 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.BackColor = System.Drawing.Color.White;
-            this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
-            this.btnCancel.ImageActive = null;
-            this.btnCancel.Location = new System.Drawing.Point(494, 3);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(28, 43);
-            this.btnCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.btnCancel.TabIndex = 7;
-            this.btnCancel.TabStop = false;
-            this.btnCancel.Zoom = 10;
-            // 
-            // btnRegister
-            // 
-            this.btnRegister.ActiveBorderThickness = 1;
-            this.btnRegister.ActiveCornerRadius = 20;
-            this.btnRegister.ActiveFillColor = System.Drawing.Color.Coral;
-            this.btnRegister.ActiveForecolor = System.Drawing.Color.White;
-            this.btnRegister.ActiveLineColor = System.Drawing.Color.Coral;
-            this.btnRegister.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRegister.BackColor = System.Drawing.Color.White;
-            this.btnRegister.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRegister.BackgroundImage")));
-            this.btnRegister.ButtonText = "Register";
-            this.btnRegister.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnRegister.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRegister.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnRegister.IdleBorderThickness = 1;
-            this.btnRegister.IdleCornerRadius = 20;
-            this.btnRegister.IdleFillColor = System.Drawing.Color.CornflowerBlue;
-            this.btnRegister.IdleForecolor = System.Drawing.Color.White;
-            this.btnRegister.IdleLineColor = System.Drawing.Color.CornflowerBlue;
-            this.btnRegister.Location = new System.Drawing.Point(62, 321);
-            this.btnRegister.Margin = new System.Windows.Forms.Padding(6);
-            this.btnRegister.Name = "btnRegister";
-            this.btnRegister.Size = new System.Drawing.Size(409, 63);
-            this.btnRegister.TabIndex = 5;
-            this.btnRegister.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -286,26 +309,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
-            // 
-            // txtConfirmPass
-            // 
-            this.txtConfirmPass.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtConfirmPass.BorderColorFocused = System.Drawing.Color.Blue;
-            this.txtConfirmPass.BorderColorIdle = System.Drawing.Color.CornflowerBlue;
-            this.txtConfirmPass.BorderColorMouseHover = System.Drawing.Color.Blue;
-            this.txtConfirmPass.BorderThickness = 3;
-            this.txtConfirmPass.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtConfirmPass.Font = new System.Drawing.Font("Century Gothic", 9.75F);
-            this.txtConfirmPass.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.txtConfirmPass.isPassword = false;
-            this.txtConfirmPass.Location = new System.Drawing.Point(62, 222);
-            this.txtConfirmPass.Margin = new System.Windows.Forms.Padding(4);
-            this.txtConfirmPass.Name = "txtConfirmPass";
-            this.txtConfirmPass.Size = new System.Drawing.Size(409, 51);
-            this.txtConfirmPass.TabIndex = 1;
-            this.txtConfirmPass.Text = "Confirm Password";
-            this.txtConfirmPass.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             // 
             // customRegisterAccount
             // 
@@ -329,16 +332,16 @@
         private System.Windows.Forms.Panel loginPanel;
         private Bunifu.Framework.UI.BunifuImageButton btnCancel;
         private Bunifu.Framework.UI.BunifuFlatButton btnRecoverPass;
-        private Bunifu.Framework.UI.BunifuFlatButton btnLogin;
+        private Bunifu.Framework.UI.BunifuFlatButton btnGoLogin;
         private Bunifu.Framework.UI.BunifuThinButton2 btnRegister;
         private System.Windows.Forms.Label label2;
         private Bunifu.Framework.UI.BunifuCheckbox checkbox;
-        private Bunifu.Framework.UI.BunifuMetroTextbox txtPassword;
-        private Bunifu.Framework.UI.BunifuMetroTextbox txtUser;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Bunifu.Framework.UI.BunifuElipse bunifuElipse1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private Bunifu.Framework.UI.BunifuMetroTextbox txtConfirmPass;
+        public Bunifu.Framework.UI.BunifuMetroTextbox txtPassword;
+        public Bunifu.Framework.UI.BunifuMetroTextbox txtUser;
+        public Bunifu.Framework.UI.BunifuMetroTextbox txtConfirmPass;
     }
 }

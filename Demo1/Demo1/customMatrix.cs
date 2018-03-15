@@ -272,6 +272,15 @@ namespace Demo1
                 //mau da bi thay doi
             }
         }
+
+        //reset color CĐR bar
+        public void resetColorCDRbar()
+        {
+            for(int i=0;i<=227;i++)
+            {
+                  tableMatrix.Rows[0].Cells[i].Style.BackColor = Color.FromArgb(0, 232, 58);
+            }
+        }
      
     }
 }

@@ -24,9 +24,12 @@ namespace Demo1
         // flag show panel login or register acc
         static public bool flag_login = false;
         static public bool flag_admin = false;
+
+        static public String currentUser = "";
         
         static public List<String> user = new List<String>();
         static public List<String> pass = new List<String>();
+
         
         public Main()
         {
@@ -58,6 +61,8 @@ namespace Demo1
             customCourseLearning2.actionLogin += HandleScreenLoginUI;
             //ad event of customLoginAccount
             customLoginAccount1.action_btnCancel_Clicked += HandleScreenPastUI;
+            customRegisterAccount1.action_btnCancel_Clicked += HandleScreenPastUI;
+
             customLessonPlant1.action_btnBack_Clicked += HandleScreenPastUI;
             customMatrix1.action_btnBack_Clicked += HandleScreenPastUI;
 
@@ -70,6 +75,17 @@ namespace Demo1
 
             //add event for doubleclick lesson to show matrix
             customLessonPlant1.action_doubleClick_Lesson += HandleScreenMatrixForm2;
+
+
+
+            //add event when don't have account and want register
+            customLoginAccount1.action_btnSignup_Clicked += HandleScreenRegisterAccount;
+
+            //add event when from screen register to login screen
+            customRegisterAccount1.action_btnGoLogin_Clicked += HandleScreenLoginUI;
+
+            //add event show username after login successfull
+            customLoginAccount1.action_setUserName += HandleSetUserName;
 
         }
 
@@ -272,9 +288,28 @@ namespace Demo1
             updateUI(_screen_UI.matrix);
         }
 
+        //login and logout
         private void btnLogin_Cick(object sender, EventArgs e)
         {
-            updateUI(_screen_UI.login);
+            if (btnLogin.Text.Equals("Login"))
+            {
+                customLoginAccount1.txtUser.ForeColor = Color.LightGray;
+                customLoginAccount1.txtUser.Text = "Username or Email";
+                customLoginAccount1.txtPassword.Text = "Password";
+                customLoginAccount1.txtPassword.ForeColor = Color.LightGray;
+                updateUI(_screen_UI.login);        
+            }
+            else
+            {
+                if (!MessageBox.Show("Are you sure to Logout?").Equals("null"))
+                {
+                    inforUserName.Text = "Guest";
+                    flag_admin = false;
+                    btnLogin.Text = "Login";
+                    customLoginAccount1.txtPassword.Text = "";
+                    updateUI(_screen_UI.login);
+                }
+            }
             flag_login = false;
         }
 
@@ -331,7 +366,10 @@ namespace Demo1
         //
         int location = -1;
         public void HandleScreenMatrixForm1(object sender, EventArgs e)
-        {
+        {   
+            //reset màu bar
+            customMatrix1.resetColorCDRbar();
+
             //chuyển giao diện qua matrix
             updateUI(_screen_UI.matrix);
             //so sánh chuẩn đầu ra và hiện màu cho cột đó
@@ -352,7 +390,7 @@ namespace Demo1
             for (int i = 0; i < customMatrix1.tableMatrix.RowCount;i++ )
             {   
                 
-                customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.Red;
+                customMatrix1.tableMatrix.Rows[0].Cells[location].Style.BackColor = Color.Red;
             }
             // sau khi hiện màu xong nếu kích vào chỗ khác thì màu phải chuyển về màu mặc định
             //... xử lý phức tạp nên có thể là chỉ đưa ra đúng vị trí đó thôi không cần hiển thị màu
@@ -361,14 +399,19 @@ namespace Demo1
                 customCourseLearning2.chuandaura = "";
             //hiển thị vị trí ở chỗ đó (scroll bar)
                 customMatrix1.tableMatrix.FirstDisplayedScrollingColumnIndex = location - 5;
-                customMatrix1.tableMatrix.Rows[location].Selected = true;
-                customMatrix1.tableMatrix.Rows[location].Cells[0].Selected = true;
+                customMatrix1.tableMatrix.FirstDisplayedScrollingRowIndex = 0;
+                //customMatrix1.tableMatrix.Rows[location].Selected = true;
+                //customMatrix1.tableMatrix.Rows[location].Cells[0].Selected = true;
                 customMatrix1.tableMatrix.PerformLayout();
         }
 
         int locationLesson = -1;
         public void HandleScreenMatrixForm2(object sender, EventArgs e)
         {
+
+            //reset màu bar
+            customMatrix1.resetColorCDRbar();
+
             Console.WriteLine("test: " + customMatrix1.tableMatrix.Rows[4].Cells[3].Value.ToString());
             for(int i = 0;i<customMatrix1.tableMatrix.RowCount;i++)
             {
@@ -388,8 +431,23 @@ namespace Demo1
                 customMatrix1.changeColorRow(locationLesson);
                 // location scroll bar
                 customMatrix1.tableMatrix.FirstDisplayedScrollingRowIndex = locationLesson;
+                customMatrix1.tableMatrix.FirstDisplayedScrollingColumnIndex = 0;
                 locationLesson = -1;
             }
+        }
+
+
+        //handle event click not a member? signup now
+        public void HandleScreenRegisterAccount(object sender, EventArgs e)
+        {
+            updateUI(_screen_UI.register);
+        }
+
+        // set username when login successfull
+        public void HandleSetUserName(object sender, EventArgs e)
+        {
+            inforUserName.Text = currentUser;
+            btnLogin.Text = "Logout";
         }
 
         // handle database
