@@ -44,8 +44,8 @@ namespace Demo1
         public event EventHandler action_btnBack_Clicked;
         List<int> locationEdit = new List<int>();
 
-        int locationRowSeclectPast = -1;
-        int locationRowSelectCurrent = -1;
+        public int locationRowSeclectPast = -1;
+        public int locationRowSelectCurrent = -1;
 
         private void btnChange_Click(object sender, EventArgs e)
         {
@@ -203,9 +203,11 @@ namespace Demo1
                     checkColor = 2;
         }
         //hiển thị màu hàng khi kich vào
+        public event EventHandler action_fixColor;
+        int locationCollumCDRlight = -1;
         private void tableMatrix_CellClick(object sender, DataGridViewCellEventArgs e)
         {   
-            locationRowSeclectPast = locationRowSelectCurrent;
+            /*locationRowSeclectPast = locationRowSelectCurrent;
             locationRowSelectCurrent = Convert.ToInt32(tableMatrix.CurrentRow.Index);
             if (!tableMatrix.Columns[e.ColumnIndex].Name.Equals("delete"))
             {
@@ -234,8 +236,81 @@ namespace Demo1
                 checkLocationSelect(locationRowSelectCurrent);
                 Console.WriteLine("checkColor = " + checkColor);
                 tableMatrix.Rows[locationRowSelectCurrent].DefaultCellStyle.BackColor = Color.FromArgb(51, 153, 255);
+                if(action_fixColor!=null)
+                {
+                    action_fixColor(this, null);
+                }*/
+                //if(Main.location!=-1)
+                //tableMatrix.Rows[locationRowSelectCurrent].Cells[Main.location].Style.BackColor = Color.FromArgb(51, 153, 255);
+
                 //mau da bi thay doi
+            if (e.RowIndex > 0)
+            {
+                tableMatrix.Rows[e.RowIndex].Selected = true;
             }
+            else if(e.RowIndex == 0 && e.ColumnIndex>3)
+            {
+                //check flag
+                if(action_fixColor!=null)
+                {
+                    action_fixColor(this, null);
+                }
+                if(locationCollumCDRlight == -1 && Main.location == -1)
+                {
+                    // cho nó sáng lên
+                    locationCollumCDRlight = e.ColumnIndex;
+                    for (int i = 1; i < tableMatrix.RowCount; i++)
+                    {
+
+                        tableMatrix.Rows[i].Cells[locationCollumCDRlight].Style.BackColor = Color.Red;
+                    }
+                }
+                else
+                {
+                    if(locationCollumCDRlight == e.ColumnIndex)
+                    { 
+                        //tắt nó đi
+                        //reset value
+                        locationCollumCDRlight = -1;
+                        resetColorTableMatrix(e.ColumnIndex);
+                    }
+                    else
+                    {
+                        resetColorTableMatrix(locationCollumCDRlight);
+                        locationCollumCDRlight = e.ColumnIndex;
+                        for (int i = 1; i < tableMatrix.RowCount; i++)
+                        {
+
+                            tableMatrix.Rows[i].Cells[locationCollumCDRlight].Style.BackColor = Color.Red;
+                        }
+                    }
+                }
+
+            }
+            
+            //}
+        }
+
+        public void resetColorTableMatrix(int location)
+        {
+            if (location != -1)
+            {
+                for (int i = 1; i < tableMatrix.RowCount; i++)
+                {
+                    if (i == 5 || i == 20)
+                    {
+                        tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.FromArgb(153, 180, 209);
+                        continue;
+                    }
+                    if (i == 21 || i == 44 || i == 62)
+                    {
+                        tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.FromArgb(164, 214, 224);
+                        continue;
+                    }
+                    tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.White;
+                }
+            }
+            //customMatrix1.resetColorTable();
         }
 
         public void changeColorRow(int index)
@@ -280,6 +355,46 @@ namespace Demo1
             {
                   tableMatrix.Rows[0].Cells[i].Style.BackColor = Color.FromArgb(0, 232, 58);
             }
+        }
+
+        //reset color table to default
+        public void resetColorTable()
+        {
+            for (int i = 0; i < tableMatrix.RowCount;i++ )
+            {
+                if(i == 5 || i==20)
+                {
+                    tableMatrix.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
+                    continue;
+                }
+                if(i== 21 || i==44 || i==62)
+                {
+                    tableMatrix.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
+                    continue;
+                }
+                tableMatrix.Rows[i].DefaultCellStyle.BackColor = Color.White;
+            }
+               // tableMatrix.Rows[5].DefaultCellStyle.BackColor = Color.Yellow;
+            ////set backcolor for header
+            tableMatrix.Rows[0].DefaultCellStyle.BackColor = Color.FromArgb(0, 232, 58);
+
+            //////set backcolor for some rows title
+            //tableMatrix.Rows[5].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
+            //tableMatrix.Rows[20].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
+            //tableMatrix.Rows[21].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
+            //tableMatrix.Rows[44].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
+            //tableMatrix.Rows[62].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
+            //// tableMatrix.Rows[81].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
+
+            //tableMatrix.Rows[0].DefaultCellStyle.Font = new Font("Tahoma", 10.0F, FontStyle.Bold);
+            //tableMatrix.Rows[0].Height = 35;
+        }
+
+        private void btnResetColor_Click(object sender, EventArgs e)
+        {
+            //resetColorTable();
+            //DataGridViewRow row = (DataGridViewRow) tableMatrix.Rows[0].Clone();
+            //tableMatrix.Rows.Add(row);
         }
      
     }

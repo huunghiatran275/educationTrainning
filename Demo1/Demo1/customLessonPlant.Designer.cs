@@ -54,6 +54,7 @@
             this.plant = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.delete = new System.Windows.Forms.DataGridViewImageColumn();
+            this.add = new System.Windows.Forms.DataGridViewImageColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableLessonPlant)).BeginInit();
             this.SuspendLayout();
@@ -171,7 +172,8 @@
             this.kind,
             this.plant,
             this.edit,
-            this.delete});
+            this.delete,
+            this.add});
             dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle10.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -298,6 +300,16 @@
             this.delete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.delete.Width = 50;
             // 
+            // add
+            // 
+            this.add.HeaderText = "Insert";
+            this.add.Image = ((System.Drawing.Image)(resources.GetObject("add.Image")));
+            this.add.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
+            this.add.Name = "add";
+            this.add.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.add.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.add.Width = 50;
+            // 
             // customLessonPlant
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -328,5 +340,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn plant;
         private System.Windows.Forms.DataGridViewImageColumn edit;
         private System.Windows.Forms.DataGridViewImageColumn delete;
+        private System.Windows.Forms.DataGridViewImageColumn add;
     }
 }

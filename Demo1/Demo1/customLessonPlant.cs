@@ -17,7 +17,7 @@ namespace Demo1
         public customLessonPlant()
         {
             InitializeComponent();
-            for (int i = 0; i <= 10;i++ )
+            for (int i = 0; i <= 11;i++ )
             {
                 tableLessonPlant.Columns[i].HeaderCell.Style.Font = new Font("Tahoma", 9F, FontStyle.Bold);
             }
@@ -40,6 +40,8 @@ namespace Demo1
             if (action_btnSave_Clicked != null)
                 action_btnSave_Clicked(this, null);
             MessageBox.Show("Saved!");
+            //test
+            //tableLessonPlant.Rows.Insert(5, "");
             tableLessonPlant.CurrentRow.ReadOnly = true;
             checkEdit = 1;
             foreach (int tmp in locationEdit)
@@ -183,6 +185,18 @@ namespace Demo1
                     tableLessonPlant.CurrentRow.ReadOnly = false;
 
                 }
+                if (tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("add"))
+                {
+                    MessageBox.Show("Insert");
+                    rowSelected = Convert.ToInt32(tableLessonPlant.CurrentRow.Index);
+                    tableLessonPlant.Rows.Insert(e.RowIndex, "");
+                    String deleteQuery = "INSERT INTO CHUONGTRINHDAOTAO(id, MaMonHoc, TenMonHoc,SoTC,LT,TH,BT,Loai,KeHoach) VALUES(10,'','','','','','','','')";
+                    Console.WriteLine(deleteQuery);
+                    SQLiteCommand lpcmd = new SQLiteCommand(deleteQuery, Main._Connection);
+                    lpcmd.ExecuteNonQuery();
+                    
+                    //save database
+                }
                 //else if (checkSelect != rowSelected && checkEdit == 2)
                 //{
                 //    int result = checkSelect + 1;
@@ -191,7 +205,7 @@ namespace Demo1
             }
             else
             {
-                if (tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("edit") || tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("delete"))
+                if (tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("edit") || tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("delete") || tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("add"))
                 {
                     MessageBox.Show("Please login before edit table");
                     if (actionLogin != null)
@@ -212,7 +226,7 @@ namespace Demo1
 
         private void tableLessonPlant_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            locationRowSeclectPast = locationRowSelectCurrent;
+            /*locationRowSeclectPast = locationRowSelectCurrent;
             locationRowSelectCurrent = Convert.ToInt32(tableLessonPlant.CurrentRow.Index);
             if (!tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("delete"))
             {
@@ -242,7 +256,12 @@ namespace Demo1
                 Console.WriteLine("checkColor = " + checkColor);
                 tableLessonPlant.Rows[locationRowSelectCurrent].DefaultCellStyle.BackColor = Color.FromArgb(51, 153, 255);
 
+            }*/
+            if (e.RowIndex >= 0)
+            {
+                tableLessonPlant.Rows[e.RowIndex].Selected = true;
             }
+
         }
 
         public void changeColorRow()

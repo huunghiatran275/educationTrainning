@@ -206,7 +206,7 @@ namespace Demo1
 
             private void tableCourseLearning_CellClick(object sender, DataGridViewCellEventArgs e)
             {
-                locationRowSeclectPast = locationRowSelectCurrent;
+                /*locationRowSeclectPast = locationRowSelectCurrent;
                 locationRowSelectCurrent = Convert.ToInt32(tableCourseLearning.CurrentRow.Index);
                 if (!tableCourseLearning.Columns[e.ColumnIndex].Name.Equals("delete"))
                 {
@@ -236,7 +236,12 @@ namespace Demo1
                     Console.WriteLine("checkColor = " + checkColor);
                     tableCourseLearning.Rows[locationRowSelectCurrent].DefaultCellStyle.BackColor = Color.FromArgb(51, 153, 255);
 
+                }*/
+                if (e.RowIndex >= 0)
+                {
+                    tableCourseLearning.Rows[e.RowIndex].Selected = true;
                 }
+
             }
 
             public String chuandaura = "";
@@ -259,6 +264,10 @@ namespace Demo1
                         Console.WriteLine("chuan dau ra la: " + chuandaura);
                         if (action_doubleClick_CDR != null)
                             action_doubleClick_CDR(this, null);
+                    }
+                    else
+                    {
+                        chuandaura = "";
                     }
                     
                 }

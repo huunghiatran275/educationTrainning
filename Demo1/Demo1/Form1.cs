@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data;
 using Finisar.SQLite;
+using MySql.Data.MySqlClient;
 namespace Demo1
 {   
     public partial class Main : Form
@@ -41,19 +42,22 @@ namespace Demo1
 
             //btnCourseGoals.Enabled = true;
            //customCourseLearning2.connectSQlite();
-           connectSQlite();
-           customCourseLearning2.loadData();
+          // connectSQlite();
+           connectMySQL();
 
 
+          
            
-           loadDataAccount();
-            //loadDataCourseLearning();
+           //loadDataAccount();
 
-            //loadDataLessonPlant();
-           customLessonPlant1.loadDataLessonPlant();
+           loadDataCourseLearning();
 
-            //loadDataMatrix();
-           customMatrix1.loadDataMatrix();
+          // customCourseLearning2.loadData();
+          // customLessonPlant1.loadDataLessonPlant();
+           //loadDataLessonPlant();
+
+           // loadDataMatrix();
+          //  customMatrix1.loadDataMatrix();
 
             //event display pastform when click back
             //add event of customCourseLearning
@@ -86,6 +90,9 @@ namespace Demo1
 
             //add event show username after login successfull
             customLoginAccount1.action_setUserName += HandleSetUserName;
+
+            //event
+            customMatrix1.action_fixColor += HandleFixColor;
 
         }
 
@@ -364,10 +371,16 @@ namespace Demo1
         }
 
         //
-        int location = -1;
+        public static int location = -1;
+
+        //handle when doubleclick cell of CDR form
         public void HandleScreenMatrixForm1(object sender, EventArgs e)
         {   
             //reset màu bar
+            if(location !=-1)
+            {
+                resetColorTableMatrix(location);
+            }
             customMatrix1.resetColorCDRbar();
 
             //chuyển giao diện qua matrix
@@ -387,10 +400,10 @@ namespace Demo1
             Console.WriteLine("location = " + location);
             Console.WriteLine("count " + customMatrix1.tableMatrix.RowCount);
             
-            for (int i = 0; i < customMatrix1.tableMatrix.RowCount;i++ )
+            for (int i = 1; i < customMatrix1.tableMatrix.RowCount;i++ )
             {   
                 
-                customMatrix1.tableMatrix.Rows[0].Cells[location].Style.BackColor = Color.Red;
+                customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.Red;
             }
             // sau khi hiện màu xong nếu kích vào chỗ khác thì màu phải chuyển về màu mặc định
             //... xử lý phức tạp nên có thể là chỉ đưa ra đúng vị trí đó thôi không cần hiển thị màu
@@ -405,6 +418,34 @@ namespace Demo1
                 customMatrix1.tableMatrix.PerformLayout();
         }
 
+        public void HandleResetColorinMain(object sender, EventArgs e)
+        {
+            if (location != -1)
+            {
+                resetColorTableMatrix(location);
+            }
+        }
+
+        public void resetColorTableMatrix(int location)
+        {
+            for (int i = 1; i < customMatrix1.tableMatrix.RowCount; i++)
+            {
+                if (i == 5 || i == 20)
+                {
+                    customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.FromArgb(153, 180, 209);
+                    continue;
+                }
+                if (i == 21 || i == 44 || i == 62)
+                {
+                    customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.FromArgb(164, 214, 224);
+                    continue;
+                }
+                customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.White;
+            }
+            //customMatrix1.resetColorTable();
+        }
+
+        //handle when double cell click of lessonPlant form
         int locationLesson = -1;
         public void HandleScreenMatrixForm2(object sender, EventArgs e)
         {
@@ -428,7 +469,8 @@ namespace Demo1
                 updateUI(_screen_UI.matrix);
                 //hiển thị khác màu
 
-                customMatrix1.changeColorRow(locationLesson);
+                //customMatrix1.changeColorRow(locationLesson);
+                customMatrix1.tableMatrix.Rows[locationLesson].Selected = true;
                 // location scroll bar
                 customMatrix1.tableMatrix.FirstDisplayedScrollingRowIndex = locationLesson;
                 customMatrix1.tableMatrix.FirstDisplayedScrollingColumnIndex = 0;
@@ -450,6 +492,15 @@ namespace Demo1
             btnLogin.Text = "Logout";
         }
 
+        public void HandleFixColor(object sender, EventArgs e)
+        {
+            if (location != -1)
+            {
+                resetColorTableMatrix(location);
+            }
+            //customMatrix1.tableMatrix.Rows[customMatrix1.locationRowSelectCurrent].Selected = true;
+        }
+
         // handle database
         public static SQLiteConnection _Connection;
         public static SQLiteCommand cmd1,cmd2,cmd3;
@@ -462,29 +513,58 @@ namespace Demo1
             _Connection = new SQLiteConnection(_ConnectionString);
             _Connection.Open();
         }
+        public static MySqlConnection mysqlConnection;
+        public static void connectMySQL()
+        {
+            //string _connectionString ="Sever =127.0.0.1;Database = database; UID = root; Password = new-password; port = 3307";
+            //mysqlConnection = new MySqlConnection(_connectionString);
+            MySqlConnectionStringBuilder _stringConnection = new MySqlConnectionStringBuilder
+            {
+                Server = "localhost",
+                Database = "database",
+                UserID = "root",
+                Password = "root",
+                Port = 3306
+
+            };
+
+            string connectionString = "SERVER=sql12.freemysqlhosting.net;PORT=3306;DATABASE=sql12232054;UID=sql12232054;PWD=L2shZZrK4X";
+
+            mysqlConnection = new MySqlConnection(connectionString);
+            mysqlConnection.Open();
+        }
+
 
         public void loadDataCourseLearning()
         {
 
+            //*sqlite*//
+            //String sql = "Select * from ChuanDauRa ";
+            //cmd1 = new SQLiteCommand(sql, _Connection);
+            //cmd1.ExecuteNonQuery();
+            //SQLiteDataAdapter da = new SQLiteDataAdapter(cmd1);
+            //data1 = new DataTable();
+            //da.Fill(data1);
 
-            String sql = "Select * from ChuanDauRa ";
-            cmd1 = new SQLiteCommand(sql, _Connection);
-            cmd1.ExecuteNonQuery();
-            SQLiteDataAdapter da = new SQLiteDataAdapter(cmd1);
+            //*sqlphpadmin*//
+
+
+            MySqlDataAdapter mysqlAdapter = new MySqlDataAdapter();
+            string sql = "Select *from chuandaura";
+            mysqlAdapter.SelectCommand = new MySqlCommand(sql, mysqlConnection);
             data1 = new DataTable();
-            da.Fill(data1);
+            mysqlAdapter.Fill(data1);
 
             foreach (DataRow item in data1.Rows)
             {
                 int n = customCourseLearning2.tableCourseLearning.Rows.Add();
-                customCourseLearning2.tableCourseLearning.Rows[n].Cells[0].Value = item["id"].ToString();
-                customCourseLearning2.tableCourseLearning.Rows[n].Cells[1].Value = item["level1"].ToString();
-                customCourseLearning2.tableCourseLearning.Rows[n].Cells[2].Value = item["level2"].ToString();
-                customCourseLearning2.tableCourseLearning.Rows[n].Cells[3].Value = item["level3"].ToString();
-                customCourseLearning2.tableCourseLearning.Rows[n].Cells[4].Value = item["level4"].ToString();
-                customCourseLearning2.tableCourseLearning.Rows[n].Cells[5].Value = item["CDR"].ToString();
-                customCourseLearning2.tableCourseLearning.Rows[n].Cells[6].Value = item["TDNL"].ToString();
-
+               // customCourseLearning2.tableCourseLearning.Rows[n].Cells[0].Value = item["id"].ToString();
+                customCourseLearning2.tableCourseLearning.Rows[n].Cells[0].Value = item["level1"].ToString();
+                customCourseLearning2.tableCourseLearning.Rows[n].Cells[1].Value = item["level2"].ToString();
+                customCourseLearning2.tableCourseLearning.Rows[n].Cells[2].Value = item["level3"].ToString();
+                customCourseLearning2.tableCourseLearning.Rows[n].Cells[3].Value = item["level4"].ToString();
+                customCourseLearning2.tableCourseLearning.Rows[n].Cells[4].Value = item["CDR"].ToString();
+                customCourseLearning2.tableCourseLearning.Rows[n].Cells[5].Value = item["TDNL"].ToString();
 
             }
 
@@ -501,12 +581,20 @@ namespace Demo1
         {
 
 
-            String sql = "Select * from ChuongTrinhDaoTao ";
-            cmd2 = new SQLiteCommand(sql, _Connection);
-            cmd2.ExecuteNonQuery();
-            SQLiteDataAdapter da1 = new SQLiteDataAdapter(cmd2);
+            //String sql = "Select * from ChuongTrinhDaoTao ";
+            //cmd2 = new SQLiteCommand(sql, _Connection);
+            //cmd2.ExecuteNonQuery();
+            //SQLiteDataAdapter da1 = new SQLiteDataAdapter(cmd2);
+            //data2 = new DataTable();
+            //da1.Fill(data2);
+
+            //*sqlphpadmin*//
+
+            MySqlDataAdapter mysqlAdapter1 = new MySqlDataAdapter();
+            string sql = "Select *from ChuongTrinhDaoTao";
+            mysqlAdapter1.SelectCommand = new MySqlCommand(sql,mysqlConnection);
             data2 = new DataTable();
-            da1.Fill(data2);
+            mysqlAdapter1.Fill(data2);
 
             foreach (DataRow item in data2.Rows)
             {
@@ -550,12 +638,18 @@ namespace Demo1
         {
 
 
-            String sql = "Select * from MaTranKyNang ";
-            cmd3 = new SQLiteCommand(sql, _Connection);
-            cmd3.ExecuteNonQuery();
-            SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd3);
+            //String sql = "Select * from MaTranKyNang ";
+            //cmd3 = new SQLiteCommand(sql, _Connection);
+            //cmd3.ExecuteNonQuery();
+            //SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd3);
+            //data3 = new DataTable();
+            //da2.Fill(data3);
+
+            MySqlDataAdapter mysqlAdapter2 = new MySqlDataAdapter();
+            string sql = "Select *from MaTranKyNang";
+            mysqlAdapter2.SelectCommand = new MySqlCommand(sql, mysqlConnection);
             data3 = new DataTable();
-            da2.Fill(data3);
+            mysqlAdapter2.Fill(data3);
 
             //foreach (DataRow item in data2.Rows)
             //{

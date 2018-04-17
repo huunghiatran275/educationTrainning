@@ -32,3 +32,4 @@ E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.customRegisterAccount.r
 E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.Main.resources
 E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.Properties.Resources.resources
 E:\GitHub\educationTrainning\Demo1\Demo1\obj\Debug\Demo1.csproj.GenerateResource.Cache
+E:\GitHub\educationTrainning\Demo1\Demo1\bin\Debug\MySql.Data.dll
