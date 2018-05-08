@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data;
 using Finisar.SQLite;
 
 namespace Demo1
@@ -36,6 +35,8 @@ namespace Demo1
 
             tableMatrix.Rows[0].DefaultCellStyle.Font = new Font("Tahoma", 10.0F, FontStyle.Bold);
             tableMatrix.Rows[0].Height = 35;
+            //hide collum id
+            //tableMatrix.Columns[230].Visible = false;
 
             ReadOnlyDataGridView();
         }
@@ -81,8 +82,6 @@ namespace Demo1
                 Main.cmd3 = new SQLiteCommand(updateQuery, Main._Connection);
                 Main.cmd3.ExecuteNonQuery();
             }
-            //btnChange.Hide();
-            //btnSave.Show();
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -113,28 +112,8 @@ namespace Demo1
                     //Main.cmd2 = new SQLiteCommand(deleteQuery, Main._Connection);
                     //Main.cmd2.ExecuteNonQuery();
                     lpcmd.ExecuteNonQuery();
-                    int n = 0;
                     tableMatrix.Rows.RemoveAt(rowSelected);
                     Main.data3.Rows.RemoveAt(rowSelected);
-                    //foreach (DataRow item in Main.data3.Rows)
-                    //{
-                    //    //int n = tableMatrix.Rows.Add();
-                    //    for (int i = 0; i <227; i++)
-                    //    {
-                    //        tableMatrix.Rows[n].Cells[i+2].Value = item["field"+ i].ToString();
-                    //        //tableMatrix.Rows[n].Cells[1].Value = item["MaMonHoc"].ToString();
-                    //        //tableMatrix.Rows[n].Cells[2].Value = item["TenMonHoc"].ToString();
-                    //        //tableMatrix.Rows[n].Cells[3].Value = item["SoTC"].ToString();
-                    //        //tableMatrix.Rows[n].Cells[4].Value = item["LT"].ToString();
-                    //        //tableMatrix.Rows[n].Cells[5].Value = item["TH"].ToString();
-                    //        //tableMatrix.Rows[n].Cells[6].Value = item["BT"].ToString();
-                    //        //tableMatrix.Rows[n].Cells[7].Value = item["Loai"].ToString();
-                    //        //tableMatrix.Rows[n].Cells[8].Value = item["KeHoach"].ToString();
-                            
-                    //    }
-                    //    n++;
-
-                    //}
 
                 }
                 else if (tableMatrix.Columns[e.ColumnIndex].Name.Equals("edit"))
@@ -389,13 +368,5 @@ namespace Demo1
             //tableMatrix.Rows[0].DefaultCellStyle.Font = new Font("Tahoma", 10.0F, FontStyle.Bold);
             //tableMatrix.Rows[0].Height = 35;
         }
-
-        private void btnResetColor_Click(object sender, EventArgs e)
-        {
-            //resetColorTable();
-            //DataGridViewRow row = (DataGridViewRow) tableMatrix.Rows[0].Clone();
-            //tableMatrix.Rows.Add(row);
-        }
-     
     }
 }

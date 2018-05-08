@@ -28,18 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(customMatrix));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(customMatrix));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnChange = new Bunifu.Framework.UI.BunifuFlatButton();
             this.btnBack = new Bunifu.Framework.UI.BunifuFlatButton();
             this.tableMatrix = new System.Windows.Forms.DataGridView();
             this.edit = new System.Windows.Forms.DataGridViewImageColumn();
             this.delete = new System.Windows.Forms.DataGridViewImageColumn();
-            this.btnResetColor = new Bunifu.Framework.UI.BunifuFlatButton();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tableMatrix)).BeginInit();
             this.SuspendLayout();
@@ -47,7 +46,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel1.Controls.Add(this.btnResetColor);
             this.panel1.Controls.Add(this.btnChange);
             this.panel1.Controls.Add(this.btnBack);
             this.panel1.Controls.Add(this.tableMatrix);
@@ -198,43 +196,6 @@
             this.delete.Name = "delete";
             this.delete.Width = 5;
             // 
-            // btnResetColor
-            // 
-            this.btnResetColor.Activecolor = System.Drawing.SystemColors.MenuHighlight;
-            this.btnResetColor.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnResetColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-            this.btnResetColor.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnResetColor.BorderRadius = 0;
-            this.btnResetColor.ButtonText = "resetColor";
-            this.btnResetColor.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnResetColor.DisabledColor = System.Drawing.Color.Gray;
-            this.btnResetColor.Iconcolor = System.Drawing.Color.Transparent;
-            this.btnResetColor.Iconimage = ((System.Drawing.Image)(resources.GetObject("btnResetColor.Iconimage")));
-            this.btnResetColor.Iconimage_right = null;
-            this.btnResetColor.Iconimage_right_Selected = null;
-            this.btnResetColor.Iconimage_Selected = null;
-            this.btnResetColor.IconMarginLeft = 0;
-            this.btnResetColor.IconMarginRight = 0;
-            this.btnResetColor.IconRightVisible = true;
-            this.btnResetColor.IconRightZoom = 0D;
-            this.btnResetColor.IconVisible = true;
-            this.btnResetColor.IconZoom = 70D;
-            this.btnResetColor.IsTab = false;
-            this.btnResetColor.Location = new System.Drawing.Point(613, 591);
-            this.btnResetColor.Name = "btnResetColor";
-            this.btnResetColor.Normalcolor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(46)))), ((int)(((byte)(59)))));
-            this.btnResetColor.OnHovercolor = System.Drawing.Color.FromArgb(((int)(((byte)(221)))), ((int)(((byte)(79)))), ((int)(((byte)(67)))));
-            this.btnResetColor.OnHoverTextColor = System.Drawing.Color.White;
-            this.btnResetColor.Padding = new System.Windows.Forms.Padding(6);
-            this.btnResetColor.selected = false;
-            this.btnResetColor.Size = new System.Drawing.Size(131, 40);
-            this.btnResetColor.TabIndex = 13;
-            this.btnResetColor.Text = "resetColor";
-            this.btnResetColor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.btnResetColor.Textcolor = System.Drawing.Color.White;
-            this.btnResetColor.TextFont = new System.Drawing.Font("Century", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnResetColor.Click += new System.EventHandler(this.btnResetColor_Click);
-            // 
             // customMatrix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -256,6 +217,5 @@
         private System.Windows.Forms.DataGridViewImageColumn edit;
         private System.Windows.Forms.DataGridViewImageColumn delete;
         public Bunifu.Framework.UI.BunifuFlatButton btnChange;
-        private Bunifu.Framework.UI.BunifuFlatButton btnResetColor;
     }
 }

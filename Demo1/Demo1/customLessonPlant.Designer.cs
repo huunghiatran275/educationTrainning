@@ -237,10 +237,10 @@
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.level4.DefaultCellStyle = dataGridViewCellStyle5;
             this.level4.FillWeight = 315.0504F;
-            this.level4.HeaderText = "Số tiết      Lý thuyết";
+            this.level4.HeaderText = "Số tiết Lý thuyết";
             this.level4.Name = "level4";
             this.level4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.level4.Width = 72;
+            this.level4.Width = 65;
             // 
             // Outcome
             // 
@@ -270,7 +270,7 @@
             this.kind.HeaderText = "Loại học phần";
             this.kind.Name = "kind";
             this.kind.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.kind.Width = 75;
+            this.kind.Width = 60;
             // 
             // plant
             // 
@@ -308,7 +308,7 @@
             this.add.Name = "add";
             this.add.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.add.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.add.Width = 50;
+            this.add.Width = 45;
             // 
             // customLessonPlant
             // 

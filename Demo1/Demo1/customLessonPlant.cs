@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data;
 using Finisar.SQLite;
+using MySql.Data.MySqlClient;
 
 namespace Demo1
 {
@@ -31,9 +31,10 @@ namespace Demo1
         public event EventHandler action_doubleClick_Lesson;
         int tmp;
 
-        int locationRowSelectCurrent = -1;
-        int locationRowSeclectPast = -1;
+        bool flagInsert = false;
+        int nRowInsert = 0;
         public List<int> locationEdit = new List<int>();
+        int rowSelected = 0;
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -43,7 +44,7 @@ namespace Demo1
             //test
             //tableLessonPlant.Rows.Insert(5, "");
             tableLessonPlant.CurrentRow.ReadOnly = true;
-            checkEdit = 1;
+            //checkEdit = 1;
             foreach (int tmp in locationEdit)
             {
                 String mamonhoc = tableLessonPlant.Rows[tmp].Cells[1].Value.ToString();
@@ -60,12 +61,49 @@ namespace Demo1
                 Main.cmd2 = new SQLiteCommand(updateQuery, Main._Connection);
                 Main.cmd2.ExecuteNonQuery();
             }
+
+            //save to change when insert
+            if (nRowInsert != 0 && flagInsert ==true)
+            {
+                //save insert
+                string strSTT = tableLessonPlant.Rows[nRowInsert + 1].Cells[0].Value.ToString();
+                string strMaMH = tableLessonPlant.Rows[nRowInsert + 1].Cells[1].Value.ToString();
+                string strTenMH = tableLessonPlant.Rows[nRowInsert + 1].Cells[2].Value.ToString();
+                string strSTC = tableLessonPlant.Rows[nRowInsert + 1].Cells[3].Value.ToString();
+                string strLT = tableLessonPlant.Rows[nRowInsert + 1].Cells[4].Value.ToString();
+                string strTH = tableLessonPlant.Rows[nRowInsert + 1].Cells[5].Value.ToString();
+                string strBT = tableLessonPlant.Rows[nRowInsert + 1].Cells[6].Value.ToString();
+                string strLoai = tableLessonPlant.Rows[nRowInsert + 1].Cells[7].Value.ToString();
+                string strKH = tableLessonPlant.Rows[nRowInsert + 1].Cells[8].Value.ToString();
+                string command = "INSERT INTO CHUONGTRINHDAOTAO(stt,id,MaMonHoc,TenMonHoc,SoTC,LT,TH,BT,Loai,KeHoach) VALUES('" + (nPosition + 1) + "','" + strSTT + "','" + strMaMH + "','" + strTenMH + "','" + strSTC + "','" + strLT + "','" + strTH + "','" + strBT + "','" + strLoai + "','" + strKH + "')";
+                //MySqlCommand myComand = new MySqlCommand(command, Main.mysqlConnection);
+                SQLiteCommand myCommand = new SQLiteCommand(command, Main._Connection);
+                myCommand.ExecuteNonQuery();
+
+                for (int i = 1; i < nCount; i++)
+                {
+                    nIndex = ++nPosition + 2 + i - nCountDown;
+                    string command1 = "UPDATE CHUONGTRINHDAOTAO SET stt = stt - 1 WHERE stt >=" + nIndex;
+                    Console.WriteLine(command1);
+                    //MySqlCommand mycommand2 = new MySqlCommand(command1, Main.mysqlConnection);
+                    SQLiteCommand mycommand2 = new SQLiteCommand(command1, Main._Connection);
+                    mycommand2.ExecuteNonQuery();
+                    nCountDown++;
+                }
+                flagInsert = false;
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
         {
+            if(flagInsert == true)
+            {
+                flagInsert = false;
+            }
             if (action_btnBack_Clicked != null)
+            {
                 action_btnBack_Clicked(this, null);
+            }
         }
 
         private void tableLessonPlant_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -129,14 +167,19 @@ namespace Demo1
             }
         }
 
-        int checkEdit = 1;
+      ///  int checkEdit = 1;
         int checkSelect = -1;
+        //insert
+        int nPosition = 0;
+        int nIndex = 0;
+        int nCount = 0;
+        int nCountDown = 0;
         private void tableLessonPlant_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {   
 
             if (Main.flag_admin == true)
             {
-                int rowSelected = Convert.ToInt32(tableLessonPlant.CurrentRow.Index);
+                rowSelected = Convert.ToInt32(tableLessonPlant.CurrentRow.Index);
                 tmp = rowSelected;
                 if (tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("delete"))
                 {
@@ -176,7 +219,7 @@ namespace Demo1
                 {
                     MessageBox.Show("Edit");
                     //login.Visible = true;
-                    checkEdit = 2;
+                   // checkEdit = 2;
                     rowSelected = Convert.ToInt32(tableLessonPlant.CurrentRow.Index);
                     locationEdit.Add(rowSelected);
                     Console.WriteLine(rowSelected);
@@ -187,21 +230,30 @@ namespace Demo1
                 }
                 if (tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("add"))
                 {
+                    flagInsert = true;
                     MessageBox.Show("Insert");
                     rowSelected = Convert.ToInt32(tableLessonPlant.CurrentRow.Index);
-                    tableLessonPlant.Rows.Insert(e.RowIndex, "");
-                    String deleteQuery = "INSERT INTO CHUONGTRINHDAOTAO(id, MaMonHoc, TenMonHoc,SoTC,LT,TH,BT,Loai,KeHoach) VALUES(10,'','','','','','','','')";
-                    Console.WriteLine(deleteQuery);
-                    SQLiteCommand lpcmd = new SQLiteCommand(deleteQuery, Main._Connection);
-                    lpcmd.ExecuteNonQuery();
+                    nRowInsert = rowSelected;
+                    tableLessonPlant.Rows.Insert(rowSelected + 1);
+                    nPosition = rowSelected + 1;
+                    for (int i = Main.nNumbersOfLessonPlantID + 1; i > nPosition;i-- )
+                    {
+                        string commandLine = "UPDATE CHUONGTRINHDAOTAO SET stt = stt + 1 WHERE stt>= " + i;
+                        nCount++;
+                        Console.WriteLine(commandLine);
+                        //MySqlCommand myCommand = new MySqlCommand(commandLine, Main.mysqlConnection);
+                        SQLiteCommand myCommand = new SQLiteCommand(commandLine, Main._Connection);
+                        myCommand.ExecuteNonQuery();
+                    }
+
+                    //    tableLessonPlant.Rows.Insert(e.RowIndex, "");
+                    //String deleteQuery = "INSERT INTO CHUONGTRINHDAOTAO(id, MaMonHoc, TenMonHoc,SoTC,LT,TH,BT,Loai,KeHoach) VALUES(10,'','','','','','','','')";
+                    //Console.WriteLine(deleteQuery);
+                    //SQLiteCommand lpcmd = new SQLiteCommand(deleteQuery, Main._Connection);
+                    //lpcmd.ExecuteNonQuery();
                     
                     //save database
                 }
-                //else if (checkSelect != rowSelected && checkEdit == 2)
-                //{
-                //    int result = checkSelect + 1;
-                //    MessageBox.Show("Please comfirm previous row. This is row " + result);
-                //}
             }
             else
             {
@@ -215,48 +267,9 @@ namespace Demo1
             }
         }
 
-        int checkColor = -1;
-        void checkLocationSelect(int location)
-        {
-            if (tableLessonPlant.Rows[location].DefaultCellStyle.BackColor.Equals(Color.FromArgb(153, 180, 209)))
-                checkColor = 1;
-            if (tableLessonPlant.Rows[location].DefaultCellStyle.BackColor.Equals(Color.FromArgb(164, 214, 224)))
-                checkColor = 2;
-        }
 
         private void tableLessonPlant_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            /*locationRowSeclectPast = locationRowSelectCurrent;
-            locationRowSelectCurrent = Convert.ToInt32(tableLessonPlant.CurrentRow.Index);
-            if (!tableLessonPlant.Columns[e.ColumnIndex].Name.Equals("delete"))
-            {
-                //reset màu của thằng chọn past và hiện màu của thằng chọn current
-                if (locationRowSeclectPast != -1)
-                {
-                    //reset về màu trắng
-                    if (checkColor == 1)
-                    {
-                        tableLessonPlant.Rows[locationRowSeclectPast].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
-
-                    }
-
-                    if (checkColor == 2)
-                    {
-                        tableLessonPlant.Rows[locationRowSeclectPast].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
-
-                    }
-                    if (checkColor == -1)
-                    {
-                        tableLessonPlant.Rows[locationRowSeclectPast].DefaultCellStyle.BackColor = Color.White;
-
-                    }
-                }
-                checkColor = -1;
-                checkLocationSelect(locationRowSelectCurrent);
-                Console.WriteLine("checkColor = " + checkColor);
-                tableLessonPlant.Rows[locationRowSelectCurrent].DefaultCellStyle.BackColor = Color.FromArgb(51, 153, 255);
-
-            }*/
             if (e.RowIndex >= 0)
             {
                 tableLessonPlant.Rows[e.RowIndex].Selected = true;

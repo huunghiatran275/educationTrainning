@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data;
 using Finisar.SQLite;
 using MySql.Data.MySqlClient;
 namespace Demo1
-{   
+{
     public partial class Main : Form
-    {   
+    {
         // size format of windown
         const int width_default = 1100;
         const int height_default = 740;
@@ -27,11 +26,16 @@ namespace Demo1
         static public bool flag_admin = false;
 
         static public String currentUser = "";
-        
+
         static public List<String> user = new List<String>();
         static public List<String> pass = new List<String>();
 
-        
+        public enum TYPE_CONNECT
+        {
+            MySQLite = 1,
+            MySQL
+        };
+
         public Main()
         {
             InitializeComponent();
@@ -40,24 +44,24 @@ namespace Demo1
             current_screen = _screen_UI.home;
             updateUI(_screen_UI.home);
 
-            //btnCourseGoals.Enabled = true;
-           //customCourseLearning2.connectSQlite();
-          // connectSQlite();
-           connectMySQL();
+            /*connect database*/
+            connectSQlite();
+            //connectMySQL();
 
+            /*load data Account*/
+            loadDataAccount();
+            //loadDataAcountMySQL();
 
-          
-           
-           //loadDataAccount();
+            /*load data of Course Learning*/
+            loadDataCourseLearning(TYPE_CONNECT.MySQLite);
+            //loadDataCourseLearning(TYPE_CONNECT.MySQL);
 
-           loadDataCourseLearning();
-
-          // customCourseLearning2.loadData();
-          // customLessonPlant1.loadDataLessonPlant();
-           //loadDataLessonPlant();
-
-           // loadDataMatrix();
-          //  customMatrix1.loadDataMatrix();
+            /*load data of Lesson Plant*/
+            loadDataLessonPlant(TYPE_CONNECT.MySQLite);
+            //loadDataLessonPlant(TYPE_CONNECT.MySQL);
+            /*load data of table Matrix*/
+            loadDataMatrix(TYPE_CONNECT.MySQLite);
+            //loadDataMatrix(TYPE_CONNECT.MySQL);
 
             //event display pastform when click back
             //add event of customCourseLearning
@@ -149,18 +153,18 @@ namespace Demo1
             if (menuPanel.Width == 47)
             {
                 menuPanel.Width = 200;
-                
+
             }
             else
             {
                 //bunifuTransition2.HideSync(menuPanel);
                 menuPanel.Width = 47;
-                
+
                 //bunifuTransition2.ShowSync(menuPanel);
-                
+
             }
-            
-           
+
+
         }
 
         public void resetChooseAfter()
@@ -181,7 +185,7 @@ namespace Demo1
             past_screen = current_screen;
             current_screen = screen;
             switch (screen)
-            { 
+            {
                 case _screen_UI.home:
                     btnDashboard.Normalcolor = Color.FromArgb(221, 79, 67);
                     customMatrix1.Show();
@@ -191,7 +195,7 @@ namespace Demo1
                     customCourseLearning2.Hide();
                     customRegisterAccount1.Hide();
                     customLessonPlant1.Hide();
-                    
+
                     break;
 
                 case _screen_UI.courceGoals:
@@ -255,11 +259,11 @@ namespace Demo1
 
                 default:
                     break;
-                    
+
             }
         }
 
-        
+
 
         private void handlePanel_Paint(object sender, PaintEventArgs e)
         {
@@ -304,7 +308,7 @@ namespace Demo1
                 customLoginAccount1.txtUser.Text = "Username or Email";
                 customLoginAccount1.txtPassword.Text = "Password";
                 customLoginAccount1.txtPassword.ForeColor = Color.LightGray;
-                updateUI(_screen_UI.login);        
+                updateUI(_screen_UI.login);
             }
             else
             {
@@ -327,13 +331,13 @@ namespace Demo1
         }
         private void inforUserName_Click(object sender, EventArgs e)
         {
-            
+
             if (flag_login == false)
             {
                 inforUserName.Normalcolor = Color.FromArgb(41, 76, 119);
                 userPanel.BringToFront();
                 bunifuTransition1.ShowSync(userPanel);
-               //userPanel.Show();
+                //userPanel.Show();
                 flag_login = true;
             }
             else
@@ -366,8 +370,8 @@ namespace Demo1
         }
 
         public void HandleRequestLogin(object sender, EventArgs e)
-        { 
-            
+        {
+
         }
 
         //
@@ -375,47 +379,45 @@ namespace Demo1
 
         //handle when doubleclick cell of CDR form
         public void HandleScreenMatrixForm1(object sender, EventArgs e)
-        {   
+        {
             //reset màu bar
-            if(location !=-1)
+            if (location != -1)
             {
                 resetColorTableMatrix(location);
             }
             customMatrix1.resetColorCDRbar();
 
-            //chuyển giao diện qua matrix
+            //go to form matrix
             updateUI(_screen_UI.matrix);
-            //so sánh chuẩn đầu ra và hiện màu cho cột đó
-                //lấy được vị trí
-            
             for (int i = 5; i <= 227; i++)
             {
-                if(customMatrix1.tableMatrix.Rows[0].Cells[i].Value.ToString().Equals(customCourseLearning2.chuandaura))
+                if (customMatrix1.tableMatrix.Rows[0].Cells[i].Value.ToString().Equals(customCourseLearning2.chuandaura))
                 {
                     Console.WriteLine("vi tri la:" + i);
                     location = i;
                 }
             }
-                // chỉnh màu cho cột đó sáng lên
             Console.WriteLine("location = " + location);
             Console.WriteLine("count " + customMatrix1.tableMatrix.RowCount);
-            
-            for (int i = 1; i < customMatrix1.tableMatrix.RowCount;i++ )
-            {   
-                
-                customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.Red;
+
+            for (int i = 1; i < customMatrix1.tableMatrix.RowCount; i++)
+            {
+                if (location != -1)
+                {
+                    customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.Red;
+                }
             }
             // sau khi hiện màu xong nếu kích vào chỗ khác thì màu phải chuyển về màu mặc định
             //... xử lý phức tạp nên có thể là chỉ đưa ra đúng vị trí đó thôi không cần hiển thị màu
             // còn hàng thì có thể hiển thị màu khác
 
-                customCourseLearning2.chuandaura = "";
+            customCourseLearning2.chuandaura = "";
             //hiển thị vị trí ở chỗ đó (scroll bar)
-                customMatrix1.tableMatrix.FirstDisplayedScrollingColumnIndex = location - 5;
-                customMatrix1.tableMatrix.FirstDisplayedScrollingRowIndex = 0;
-                //customMatrix1.tableMatrix.Rows[location].Selected = true;
-                //customMatrix1.tableMatrix.Rows[location].Cells[0].Selected = true;
-                customMatrix1.tableMatrix.PerformLayout();
+            customMatrix1.tableMatrix.FirstDisplayedScrollingColumnIndex = location - 5;
+            customMatrix1.tableMatrix.FirstDisplayedScrollingRowIndex = 0;
+            //customMatrix1.tableMatrix.Rows[location].Selected = true;
+            //customMatrix1.tableMatrix.Rows[location].Cells[0].Selected = true;
+            customMatrix1.tableMatrix.PerformLayout();
         }
 
         public void HandleResetColorinMain(object sender, EventArgs e)
@@ -442,7 +444,6 @@ namespace Demo1
                 }
                 customMatrix1.tableMatrix.Rows[i].Cells[location].Style.BackColor = Color.White;
             }
-            //customMatrix1.resetColorTable();
         }
 
         //handle when double cell click of lessonPlant form
@@ -454,22 +455,21 @@ namespace Demo1
             customMatrix1.resetColorCDRbar();
 
             Console.WriteLine("test: " + customMatrix1.tableMatrix.Rows[4].Cells[3].Value.ToString());
-            for(int i = 0;i<customMatrix1.tableMatrix.RowCount;i++)
+            for (int i = 0; i < customMatrix1.tableMatrix.RowCount; i++)
             {
-                if(customMatrix1.tableMatrix.Rows[i].Cells[3].Value.ToString().Equals(customLessonPlant1.focustLesson))
+                if (customMatrix1.tableMatrix.Rows[i].Cells[3].Value.ToString().Equals(customLessonPlant1.focustLesson))
                 {
                     locationLesson = i;
-                    Console.WriteLine("vi tri cua mon hoc la: " + locationLesson);
+                    Console.WriteLine("location of subject: " + locationLesson);
                     break;
                 }
             }
-            if(locationLesson!=-1)
+            if (locationLesson != -1)
             {
                 //update UI
                 updateUI(_screen_UI.matrix);
-                //hiển thị khác màu
+                //show color
 
-                //customMatrix1.changeColorRow(locationLesson);
                 customMatrix1.tableMatrix.Rows[locationLesson].Selected = true;
                 // location scroll bar
                 customMatrix1.tableMatrix.FirstDisplayedScrollingRowIndex = locationLesson;
@@ -498,13 +498,12 @@ namespace Demo1
             {
                 resetColorTableMatrix(location);
             }
-            //customMatrix1.tableMatrix.Rows[customMatrix1.locationRowSelectCurrent].Selected = true;
         }
 
         // handle database
         public static SQLiteConnection _Connection;
-        public static SQLiteCommand cmd1,cmd2,cmd3;
-        public static DataTable data1,data2,data3,dataAccount;
+        public static SQLiteCommand cmd1, cmd2, cmd3;
+        public static DataTable data1, data2, data3, dataAccount;
 
         public static void connectSQlite()
         {
@@ -516,8 +515,6 @@ namespace Demo1
         public static MySqlConnection mysqlConnection;
         public static void connectMySQL()
         {
-            //string _connectionString ="Sever =127.0.0.1;Database = database; UID = root; Password = new-password; port = 3307";
-            //mysqlConnection = new MySqlConnection(_connectionString);
             MySqlConnectionStringBuilder _stringConnection = new MySqlConnectionStringBuilder
             {
                 Server = "localhost",
@@ -528,78 +525,107 @@ namespace Demo1
 
             };
 
-            string connectionString = "SERVER=sql12.freemysqlhosting.net;PORT=3306;DATABASE=sql12232054;UID=sql12232054;PWD=L2shZZrK4X";
-
-            mysqlConnection = new MySqlConnection(connectionString);
-            mysqlConnection.Open();
+            //  string connectionString = "SERVER=sql12.freemysqlhosting.net;PORT=3306;DATABASE=sql12232054;UID=sql12232054;PWD=L2shZZrK4X";
+            mysqlConnection = new MySqlConnection(_stringConnection.ToString());
+            try
+            {
+                mysqlConnection.Open();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                MessageBox.Show("Can't connect MySQL");
+            }
         }
-
-
-        public void loadDataCourseLearning()
+        public static int nNumbersOfCourseID = 0;
+        public void loadDataCourseLearning(TYPE_CONNECT eTypeConnect)
         {
+            switch (eTypeConnect)
+            {
+                case TYPE_CONNECT.MySQLite:
+                    {
+                        //*sqlite*//
+                        String sql = "Select * from ChuanDauRa ";
+                        cmd1 = new SQLiteCommand(sql, _Connection);
+                        cmd1.ExecuteNonQuery();
+                        SQLiteDataAdapter da = new SQLiteDataAdapter(cmd1);
+                        data1 = new DataTable();
+                        da.Fill(data1);
+                        break;
+                    }
 
-            //*sqlite*//
-            //String sql = "Select * from ChuanDauRa ";
-            //cmd1 = new SQLiteCommand(sql, _Connection);
-            //cmd1.ExecuteNonQuery();
-            //SQLiteDataAdapter da = new SQLiteDataAdapter(cmd1);
-            //data1 = new DataTable();
-            //da.Fill(data1);
+                case TYPE_CONNECT.MySQL:
+                    {
+                        //*sqlphpadmin*//
 
-            //*sqlphpadmin*//
+                        MySqlDataAdapter mysqlAdapter = new MySqlDataAdapter();
+                        string sql = "Select *from chuandaura";
+                        mysqlAdapter.SelectCommand = new MySqlCommand(sql, mysqlConnection);
+                        data1 = new DataTable();
+                        mysqlAdapter.Fill(data1);
+                        break;
+                    }
 
-
-            MySqlDataAdapter mysqlAdapter = new MySqlDataAdapter();
-            string sql = "Select *from chuandaura";
-            mysqlAdapter.SelectCommand = new MySqlCommand(sql, mysqlConnection);
-            data1 = new DataTable();
-            mysqlAdapter.Fill(data1);
-
+                default:
+                    {
+                        break;
+                    }
+            }
             foreach (DataRow item in data1.Rows)
             {
                 int n = customCourseLearning2.tableCourseLearning.Rows.Add();
-               // customCourseLearning2.tableCourseLearning.Rows[n].Cells[0].Value = item["id"].ToString();
+                // customCourseLearning2.tableCourseLearning.Rows[n].Cells[0].Value = item["id"].ToString();
                 customCourseLearning2.tableCourseLearning.Rows[n].Cells[0].Value = item["level1"].ToString();
                 customCourseLearning2.tableCourseLearning.Rows[n].Cells[1].Value = item["level2"].ToString();
                 customCourseLearning2.tableCourseLearning.Rows[n].Cells[2].Value = item["level3"].ToString();
                 customCourseLearning2.tableCourseLearning.Rows[n].Cells[3].Value = item["level4"].ToString();
                 customCourseLearning2.tableCourseLearning.Rows[n].Cells[4].Value = item["CDR"].ToString();
                 customCourseLearning2.tableCourseLearning.Rows[n].Cells[5].Value = item["TDNL"].ToString();
-
+                nNumbersOfCourseID = n;
             }
 
             customCourseLearning2.tableCourseLearning.Rows[78].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
             customCourseLearning2.tableCourseLearning.Rows[104].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
             customCourseLearning2.tableCourseLearning.Rows[149].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
-
-            //customCourseLearning2.tableCourseLearning.ColumnHeader.DefaultCellStyle.BackColor = Color.FromArgb(0, 232, 58);
-            //customCourseLearning2.tableCourseLearning.Columns[1].HeaderCell.Style.BackColor = Color.FromArgb(0, 232, 58);
-            //_Connection.Close();
         }
-
-        public void loadDataLessonPlant()
+        public static int nNumbersOfLessonPlantID = 0;
+        public void loadDataLessonPlant(TYPE_CONNECT eTypeConnect)
         {
+            switch (eTypeConnect)
+            {
+                case TYPE_CONNECT.MySQLite:
+                    {
+                        /*SQLite*/
+                        String sql = "Select * from ChuongTrinhDaoTao ";
+                        cmd2 = new SQLiteCommand(sql, _Connection);
+                        cmd2.ExecuteNonQuery();
+                        SQLiteDataAdapter da1 = new SQLiteDataAdapter(cmd2);
+                        data2 = new DataTable();
+                        da1.Fill(data2);
+                        break;
+                    }
 
+                case TYPE_CONNECT.MySQL:
+                    {
+                        //*sqlphpadmin*//
+                        MySqlDataAdapter mysqlAdapter1 = new MySqlDataAdapter();
+                        string sql = "Select *from ChuongTrinhDaoTao";
+                        mysqlAdapter1.SelectCommand = new MySqlCommand(sql, mysqlConnection);
+                        data2 = new DataTable();
+                        mysqlAdapter1.Fill(data2);
+                        break;
+                    }
 
-            //String sql = "Select * from ChuongTrinhDaoTao ";
-            //cmd2 = new SQLiteCommand(sql, _Connection);
-            //cmd2.ExecuteNonQuery();
-            //SQLiteDataAdapter da1 = new SQLiteDataAdapter(cmd2);
-            //data2 = new DataTable();
-            //da1.Fill(data2);
-
-            //*sqlphpadmin*//
-
-            MySqlDataAdapter mysqlAdapter1 = new MySqlDataAdapter();
-            string sql = "Select *from ChuongTrinhDaoTao";
-            mysqlAdapter1.SelectCommand = new MySqlCommand(sql,mysqlConnection);
-            data2 = new DataTable();
-            mysqlAdapter1.Fill(data2);
-
+                default:
+                    {
+                        break;
+                    }
+            }
             foreach (DataRow item in data2.Rows)
             {
+
                 int n = customLessonPlant1.tableLessonPlant.Rows.Add();
-                customLessonPlant1.tableLessonPlant.Rows[n].Cells[0].Value = item["stt"].ToString();
+                customLessonPlant1.tableLessonPlant.Rows[n].Cells[0].Value = item["id"].ToString();
                 customLessonPlant1.tableLessonPlant.Rows[n].Cells[1].Value = item["MaMonHoc"].ToString();
                 customLessonPlant1.tableLessonPlant.Rows[n].Cells[2].Value = item["TenMonHoc"].ToString();
                 customLessonPlant1.tableLessonPlant.Rows[n].Cells[3].Value = item["SoTC"].ToString();
@@ -608,6 +634,7 @@ namespace Demo1
                 customLessonPlant1.tableLessonPlant.Rows[n].Cells[6].Value = item["BT"].ToString();
                 customLessonPlant1.tableLessonPlant.Rows[n].Cells[7].Value = item["Loai"].ToString();
                 customLessonPlant1.tableLessonPlant.Rows[n].Cells[8].Value = item["KeHoach"].ToString();
+                nNumbersOfLessonPlantID = n;
 
             }
             customLessonPlant1.tableLessonPlant.Rows[5].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
@@ -623,67 +650,57 @@ namespace Demo1
             customLessonPlant1.tableLessonPlant.Rows[114].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
             customLessonPlant1.tableLessonPlant.Rows[128].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
             customLessonPlant1.tableLessonPlant.Rows[140].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
-            customLessonPlant1.tableLessonPlant.Rows[150].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
+            // customLessonPlant1.tableLessonPlant.Rows[150].DefaultCellStyle.BackColor = Color.FromArgb(153, 180, 209);
             customLessonPlant1.tableLessonPlant.Rows[48].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
             customLessonPlant1.tableLessonPlant.Rows[75].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
             customLessonPlant1.tableLessonPlant.Rows[115].DefaultCellStyle.BackColor = Color.FromArgb(164, 214, 224);
 
-
-
-
             //_Connection.Close();
         }
 
-        public void loadDataMatrix()
+        public void loadDataMatrix(TYPE_CONNECT eTypeConnect)
         {
+            switch (eTypeConnect)
+            {
+                case TYPE_CONNECT.MySQLite:
+                    {
+                        /*SQLite*/
+                        String sql = "Select * from MaTranKyNang ";
+                        cmd3 = new SQLiteCommand(sql, _Connection);
+                        cmd3.ExecuteNonQuery();
+                        SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd3);
+                        data3 = new DataTable();
+                        da2.Fill(data3);
+                        break;
+                    }
 
+                case TYPE_CONNECT.MySQL:
+                    {
+                        /*MySQL*/
+                        MySqlDataAdapter mysqlAdapter2 = new MySqlDataAdapter();
+                        string sql = "Select *from MaTranKyNang";
+                        mysqlAdapter2.SelectCommand = new MySqlCommand(sql, mysqlConnection);
+                        data3 = new DataTable();
+                        mysqlAdapter2.Fill(data3);
+                        break;
+                    }
 
-            //String sql = "Select * from MaTranKyNang ";
-            //cmd3 = new SQLiteCommand(sql, _Connection);
-            //cmd3.ExecuteNonQuery();
-            //SQLiteDataAdapter da2 = new SQLiteDataAdapter(cmd3);
-            //data3 = new DataTable();
-            //da2.Fill(data3);
+                default:
+                    {
+                        break;
+                    }
+            }
 
-            MySqlDataAdapter mysqlAdapter2 = new MySqlDataAdapter();
-            string sql = "Select *from MaTranKyNang";
-            mysqlAdapter2.SelectCommand = new MySqlCommand(sql, mysqlConnection);
-            data3 = new DataTable();
-            mysqlAdapter2.Fill(data3);
-
-            //foreach (DataRow item in data2.Rows)
-            //{
-            //    int n = customLessonPlant1.tableLessonPlant.Rows.Add();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[0].Value = item["stt"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[1].Value = item["MaMonHoc"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[2].Value = item["TenMonHoc"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[3].Value = item["SoTC"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[4].Value = item["LT"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[5].Value = item["TH"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[6].Value = item["BT"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[7].Value = item["Loai"].ToString();
-            //    customLessonPlant1.tableLessonPlant.Rows[n].Cells[8].Value = item["KeHoach"].ToString();
-
-
-            //}
-            //_Connection.Close();
-
-            // xu ly kich thuoc
-
-            //data3.Columns[2].MaxLength = 50;
             customMatrix1.tableMatrix.DataSource = data3;
-            //customMatrix1.tableMatrix.EnableHeadersVisualStyles = true;
-            //customMatrix1.tableMatrix.RowHeadersWidth = 60;
-            //customMatrix1.tableMatrix.ColumnHeadersHeight = 50;
             foreach (DataGridViewColumn column in customMatrix1.tableMatrix.Columns)
             {
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
-            customMatrix1.tableMatrix.Rows[3].DefaultCellStyle.BackColor = Color.Red;
         }
 
         public void loadDataAccount()
         {
+
             String sql = "Select * from account ";
             cmd3 = new SQLiteCommand(sql, _Connection);
             cmd3.ExecuteNonQuery();
@@ -700,8 +717,24 @@ namespace Demo1
             Console.WriteLine(pass);
 
         }
-        
 
-        
+        public void loadDataAcountMySQL()
+        {
+            String sql = "Select * from account";
+            MySqlDataAdapter dataAccount = new MySqlDataAdapter();
+            dataAccount.SelectCommand = new MySqlCommand(sql, mysqlConnection);
+            DataTable AccountTable = new DataTable();
+            dataAccount.Fill(AccountTable);
+            foreach (DataRow row in AccountTable.Rows)
+            {
+                user.Add(row["user"].ToString());
+                pass.Add(row["password"].ToString());
+            }
+            Console.WriteLine(user);
+            Console.WriteLine(pass);
+        }
+
+
+
     }
 }
